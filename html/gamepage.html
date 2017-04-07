@@ -10,8 +10,39 @@
 
 </head>
 
-<body>
+<body onload="loading()">
+
+   <div id="searching">Finding your opponent</div>
+
+   <div style="display:none;" id="game">
+	   <ul style="list-style-type: none; display: inline-block;">
+			<li> Username </li>
+			<li> Token: X values </li>
+			<li> Points: Y Points </li>
+	   </ul>
+	   <ul style="list-style-type: none; display: inline-block;">
+			<li> Opp-Username </li>
+			<li> Opp-Token: X values </li>
+			<li> Opp-Points: Y Points </li>
+	   </ul>
+   </div>
 
 </body>
+
+<script>
+
+$(document).ready(function(){
+	setTimeout(function() { alert("Your oppenent has clicked ok. WHen you ready click ok. Click ok to start!") }, 3000);
+});
+
+function loading() {
+    setTimeout(showPage, 3000);
+}
+
+function showPage() {
+  document.getElementById("searching").style.display = "none";
+  document.getElementById("game").style.display = "block";
+}
+</script>
 
 </html>
