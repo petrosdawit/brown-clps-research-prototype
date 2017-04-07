@@ -14,6 +14,8 @@
 
    <div id="searching">Finding your opponent</div>
 
+   <div style="display:none;" id="foundOpponent">We found your Opponent. Your game will start in 5 seconds. Get Ready!</div>
+
    <div style="display:none;" id="game">
 	   <ul style="list-style-type: none; display: inline-block;">
 			<li> Username </li>
@@ -31,16 +33,19 @@
 
 <script>
 
-$(document).ready(function(){
-	setTimeout(function() { alert("Your oppenent has clicked ok. WHen you ready click ok. Click ok to start!") }, 3000);
-});
 
 function loading() {
-    setTimeout(showPage, 3000);
+    setTimeout(changeLoad, 7000);
+    setTimeout(foundOpponent, 12000);
 }
 
-function showPage() {
+function changeLoad() {
   document.getElementById("searching").style.display = "none";
+  document.getElementById("foundOpponent").style.display = "block";
+}
+
+function foundOpponent() {
+  document.getElementById("foundOpponent").style.display = "none";
   document.getElementById("game").style.display = "block";
 }
 </script>
