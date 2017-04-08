@@ -6,6 +6,26 @@
         <meta charset="UTF-8">
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <style type="text/css">
+            .loader {
+                border: 16px solid #f3f3f3;
+                border-radius: 50%;
+                border-top: 16px solid #3498db;
+                width: 120px;
+                height: 120px;
+                -webkit-animation: spin 2s linear infinite;
+                animation: spin 2s linear infinite;
+            }
+
+            @-webkit-keyframes spin {
+                0% { -webkit-transform: rotate(0deg); }
+                100% { -webkit-transform: rotate(360deg); }
+            }
+
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+
             #stoplight {
                 background-color: red;
                 border-radius: 200px;
@@ -29,111 +49,38 @@
 
             }
         </style>
-
-        <script>
-
-        var gameArr = new Array(100);
-        for (var i = 0; i<gameArr.length; i++){
-            if (i%7 == 2 || i%4 == 2){
-                gameArr[i] = 0;
-            } else {
-                gameArr[i] = 1;
-            }
-        }
-        var count = 0
-        for (var i = 0; i<gameArr.length; i++){
-            if (gameArr[i] == 0){
-                count++;
-            }
-        }
-        console.log(count);
-        var index = 0;
-        var sound = new Audio("Mariokart.mp3");
-        var i = 0
-
-        function reset(){
-            sound.play();
-            var changeColors = window.setInterval(function(){
-                colors = ["red", "yellow", "green"];
-                if (i < 3){
-                    $("#stoplight").css("background-color", colors[i]);
-                    i += 1;
-                }
-                else {
-                    window.clearInterval(changeColors);
-                    $("#spacebar").append("Hit the spacebar!");
-                }
-            }, 830);
-        }
-        reset();
-        $(function(){
-            $(document).keypress(function(e){
-                if (e.keyCode == 32 && i > 2){
-                    console.log("Spacebar hit");
-                    console.log(index);
-                    if (gameArr[index] == 1){
-                        console.log()
-                        $("#stoplight").css("background-color", "red");
-                        index++;
-                        i = 0;
-                        console.log("win");
-                        prompt();
-                        $('#spacebar').remove();
-                        reset();
-                        // $('#spacebar').remove();
-                    } else {
-                        $("#spacebar").append("You lost!");
-                        $("#stoplight").css("background-color", "red");
-                        index++;
-                        i = 0;
-                        console.log("lose");
-                        prompt();
-                        $('#spacebar').remove();
-                        reset();
-                        // $('#spacebar').remove();
-                    }
-                }
-            })
-        })
-
-        </script>
     </head>
-    <body>
-    <center><canvas id="myCanvas" width="80" height="130"
-    style="border:3px solid #808080;"></center>
-    </canvas>
+    <body onload="loading()">
 
-    <script>
-    var canvas = document.getElementById("myCanvas");
-    var ctx = canvas.getContext("2d");
-    ctx.fillStyle = "#222";
-    ctx.fillRect(0,0,80,130);
+        <div id="searching">Finding your opponent</div>
+        <div id="loader" class="loader"></div>
 
-    ctx.fillStyle = "#c82124"; //red
-    ctx.beginPath();
-    ctx.arc(40,25,15,0,Math.PI*2,true);
-    ctx.closePath();
-    ctx.fill();
+        <div style="display:none;" id="foundOpponent">We found your Opponent. Your game will start in 5 seconds. Get Ready!</div>
+        <div style="display:none;" id="countDown"></div>
 
-    ctx.fillStyle = "#E5E500"; //yellow
-    ctx.beginPath();
-    ctx.arc(40,65,15,0,Math.PI*2,true);
-    ctx.closePath();
-    ctx.fill();
+        <div style="display:none;" id="game">
+            <center><canvas id="myCanvas" width="80" height="130"
+            style="border:3px solid #808080;"></center>
+            </canvas>
+            <ul style="list-style-type: none; display: inline-block;">
+                <li> Username </li>
+                <li> Token: X values </li>
+                <li> Points: Y Points </li>
+            </ul>
+            <ul style="list-style-type: none; display: inline-block;">
+                <li> Opp-Username </li>
+                <li> Opp-Token: X values </li>
+                <li> Opp-Points: Y Points </li>
+            </ul>
+                <div id="stoplight">
 
-    ctx.fillStyle = "#009900"; //green
-    ctx.beginPath();
-    ctx.arc(40,105,15,0,Math.PI*2,true);
-    ctx.closePath();
-    ctx.fill();
-    </script>
+        </div>
+        <div id="car">
+        </div>
+        <p id="spacebar">
+        </div>
+        </p>
 
-    <div id="stoplight">
-
-    </div>
-    <div id="car">
-    </div>
-    <p id="spacebar">
-
-    </p>
+    <script src="../js/game.js"></script>     
     </body>
+</html
