@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Game</title>
+        <meta charset="UTF-8">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <style type="text/css">
+            #stoplight {
+                background-color: red;
+                border-radius: 200px;
+                height: 100px;
+                width: 100px;
+                margin: auto;
+            }
+            #spacebar {
+                font-weight: bold;
+                font-size: 30px;
+                text-align: center;
+                padding-top: 50px;
+            }
+            #car {
+                background-color: blue;
+                border-radius: 40px;
+                height:40px;
+                width: 60px;
+                position: absolute;
+                padding-top: 10px;
+
+            }
+        </style>
+
+        <script>
+            var sound = new Audio("Mariokart.mp3");
+            var i = 0
+            var clicks = 0
+            var xpos = 0;
+            sound.play();
+            var changeColors = window.setInterval(function(){
+                colors = ["red", "yellow", "green"];
+                if (i < 3){
+                    $("#stoplight").css("background-color", colors[i]);
+                    i += 1;
+                }
+                else {
+                    window.clearInterval(changeColors);
+                    $("#spacebar").append("Hit the spacebar!");
+                }
+
+
+            }, 830);
+            $(function(){
+                $(document).keypress(function(e){
+                    if (e.keyCode == 32 && i > 2){
+                        clicks += 1;
+                        console.log("Spacebar hit");
+                        xpos += 30;
+                        $("#car").css({left: xpos});
+                        if(clicks == 10){
+                            //render win/lose page
+                        }
+                    }
+                })
+            })
+        </script>
+    </head>
+    <body>
+    <div id="stoplight">
+
+    </div>
+    <div id="car">
+    </div>
+    <p id="spacebar">
+
+    </p>
+    </body>
