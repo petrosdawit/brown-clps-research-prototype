@@ -1,3 +1,7 @@
+body {
+    background: url("../images/backgroundTrack.png") no-repeat center center;
+}
+
 .loader {
     border: 16px solid #f3f3f3;
     border-radius: 50%;
