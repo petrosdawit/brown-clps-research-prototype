@@ -1,0 +1,25 @@
+#buttonid{
+	font-family: 'Merriweather', sans-serif;
+	background:  linear-gradient(
+      rgba(105, 105, 105, 0.5), 
+      rgba(105, 105, 105, 0.5)
+    );
+	color: black;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.5vw;
+    margin: 4px 2px;
+    margin-top: 40px	;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+#buttondiv button:hover{
+	background:  linear-gradient(
+      rgba(105, 105, 105, 1), 
+      rgba(105, 105, 105, 1)
+    );
+}
