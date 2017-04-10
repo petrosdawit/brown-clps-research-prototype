@@ -15,24 +15,29 @@
         <div style="display:none;" id="foundOpponent">We found your Opponent. Your game will start in 5 seconds. Get Ready!</div>
         <div style="display:none;" id="countDown"></div>
 
-        <div style="display:none;" id="game">
-            <center><canvas id="myCanvas" width="90" height="140"
-            style="border:3px solid #808080;"></center>
-            </canvas>
-            <ul style="list-style-type: none; display: inline-block;">
-                <li> Username </li>
-                <li> Token: X values </li>
-                <li> Points: Y Points </li>
-            </ul>
-            <ul style="list-style-type: none; display: inline-block;">
-                <li> Opp-Username </li>
-                <li> Opp-Token: X values </li>
-                <li> Opp-Points: Y Points </li>
-            </ul>
-                <div id="stoplight">
-        </div>
-        <div id="car">
-        </div>
+   <div style="display:none;" id="game">
+    <button id="myBtn">Instructions</button>
+    <div id="infoBar">
+      <div id="plyDiv">
+           <ul style="list-style-type: none; display: inline-block;" id="PlyInfo">
+                <li id="namePly" value=""> </li>
+                <li id="tokensPly" value="">  </li>
+                <li id="pointsPly" value="">  </li>
+           </ul>
+      </div>
+
+      <div id ="trafficLight">
+        <center><canvas id="myCanvas" width="90" height="140"
+        style="border:3px solid #808080;"></center>
+      </div>
+
+      <div id="oppDiv">
+           <ul style="list-style-type: none; display: inline-block;" id="OppInfo">
+                <li id="nameOpp" value=""> </li>
+          <li id="tokensOpp" value="">  </li>
+          <li id="pointsOpp" value="">  </li>
+         </ul>
+      </div>
         <p id="spacebar">
         </div>
         </p>
