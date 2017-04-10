@@ -15,18 +15,43 @@ for (var i = 0; i<gameArr.length; i++){
 console.log(count);
 var index = 0;
 var sound = new Audio("Mariokart.mp3");
-var i = 0
+var i = 0;
+
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+var ctx1 = canvas.getContext("2d");
+
+ctx.fillStyle = "#222";
+ctx.strokeStyle="#111";
+ctx.lineWidth=6;
+ctx.strokeRect(0,0,90,140);
+ctx.fillRect(4,4,82,132);
 
 function reset(){
     sound.play();
     var changeColors = window.setInterval(function(){
         colors = ["red", "yellow", "green"];
+        pos_x=[45, 45, 45];
+        pos_y=[30, 70, 110];
+
         if (i < 3){
-            $("#stoplight").css("background-color", colors[i]);
+            // $("#stoplight").css("background-color", colors[i]);
+            ctx1.fillStyle="#222";
+            ctx1.fill();
+            ctx.strokeStyle=colors[i];
+            ctx.strokeRect(0,0,90,140);
+            ctx1.beginPath();
+            ctx1.arc(pos_x[i],pos_y[i],20,0,Math.PI*2,true);
+            ctx1.closePath();
+            ctx1.fillStyle=colors[i];
+            ctx1.strokeStyle="#222";
+            ctx1.fill();
+            ctx1.stroke();
             i += 1;
         }
         else {
             window.clearInterval(changeColors);
+            $('#spacebar').empty();
             $("#spacebar").append("Hit the spacebar!");
         }
     }, 830);
@@ -38,25 +63,41 @@ $(function(){
             console.log("Spacebar hit");
             console.log(index);
             if (gameArr[index] == 1){
+                $('#spacebar').empty();
+                $("#spacebar").append("You win!");
                 console.log()
-                $("#stoplight").css("background-color", "red");
+                // $("#stoplight").css("background-color", "red");
+                ctx1.fillStyle="#222";
+                ctx1.strokeStyle="#222";
+                ctx1.fill();
+                ctx1.stroke();
+                ctx.fillStyle = "#222";
+                ctx.strokeStyle="#222";
+                ctx.lineWidth=6;
+                ctx.strokeRect(0,0,90,140);
+                ctx.fillRect(4,4,82,132);
                 index++;
                 i = 0;
                 console.log("win");
                 prompt();
-                $('#spacebar').remove();
                 reset();
-                // $('#spacebar').remove();
             } else {
+                $('#spacebar').empty();
                 $("#spacebar").append("You lost!");
-                $("#stoplight").css("background-color", "red");
+                // $("#stoplight").css("background-color", "red");
+                ctx1.fillStyle="#222";
+                ctx1.strokeStyle="#222";
+                ctx1.fill();
+                ctx1.stroke();
+                ctx.strokeStyle="#111";
+                ctx.lineWidth=6;
+                ctx.strokeRect(0,0,90,140);
+                ctx.fillRect(4,4,82,132);
                 index++;
                 i = 0;
                 console.log("lose");
                 prompt();
-                $('#spacebar').remove();
                 reset();
-                // $('#spacebar').remove();
             }
         }
     })
@@ -90,26 +131,3 @@ function foundOpponent() {
     document.getElementById("countDown").style.display = "none";
     document.getElementById("game").style.display = "block";
 }
-
-var canvas = document.getElementById("myCanvas");
-var ctx = canvas.getContext("2d");
-ctx.fillStyle = "#222";
-ctx.fillRect(0,0,80,130);
-
-ctx.fillStyle = "#c82124"; //red
-ctx.beginPath();
-ctx.arc(40,25,15,0,Math.PI*2,true);
-ctx.closePath();
-ctx.fill();
-
-ctx.fillStyle = "#E5E500"; //yellow
-ctx.beginPath();
-ctx.arc(40,65,15,0,Math.PI*2,true);
-ctx.closePath();
-ctx.fill();
-
-ctx.fillStyle = "#009900"; //green
-ctx.beginPath();
-ctx.arc(40,105,15,0,Math.PI*2,true);
-ctx.closePath();
-ctx.fill();
