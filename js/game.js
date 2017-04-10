@@ -53,6 +53,9 @@ function reset(){
             window.clearInterval(changeColors);
             $('#spacebar').empty();
             $("#spacebar").append("Hit the spacebar!");
+            var hitSpace = window.setInterval(function(){
+                $('#spacebar').empty();
+            }, 600);
         }
     }, 830);
 }
