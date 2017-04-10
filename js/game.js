@@ -104,7 +104,7 @@ $(function(){
 })
 
 function loading() {
-    setTimeout(reset, 12000);
+    setTimeout(reset,  12000);
     setTimeout(changeLoad, 7000);
     setTimeout(foundOpponent, 12000);
 }
