@@ -1,0 +1,48 @@
+@font-face{
+    font-family:"arcade";
+    src:url("../fonts/arcade.ttf");
+}
+
+@font-face{
+    font-family:"arcade";
+    src:url("../fonts/kirbyss.ttf");
+}
+
+html{
+    height: 80%;
+    width: 100%;
+}
+
+body{
+    max-width: 100%;
+    max-height: 100%;
+    margin-top: 100px;
+    background-color: #8f95a8;
+    background: linear-gradient(
+    	rgba(0,0,255,0.3),
+    	rgba(0,0,255,0.3)
+    	),url("../images/backgroundTrack.png") no-repeat center center;
+    background-size: cover;
+}
+
+#findOppButton {
+	position: relative;
+	max-width: 25%;
+	max-height: 20%;
+	left: -65px;
+	margin-top: 100px;
+}
+
+p{
+    font-family: "arcade";
+	font-size: 30px;
+    position: relative;
+}
+#userNameField, #userIDField{
+	font-family: "arcade";
+	font-size: 15px;
+    position: relative;
+    height:30px;
+    width: 250px;
+    padding-left: 20px;
+}
