@@ -35,7 +35,6 @@ function reset(){
         pos_y=[30, 70, 110];
 
         if (i < 3){
-            // $("#stoplight").css("background-color", colors[i]);
             ctx1.fillStyle="#222";
             ctx1.fill();
             ctx.strokeStyle=colors[i];
@@ -52,6 +51,10 @@ function reset(){
         else {
             window.clearInterval(changeColors);
             $('#spacebar').empty();
+            $("#img1").css("animation-name", "example3");
+            $("#img1").css("animation-duration", 0);
+            $("#img2").css("animation-name", "example3");
+            $("#img2").css("animation-duration", 0);
             $("#spacebar").append("Hit the spacebar!");
             var hitSpace = window.setInterval(function(){
                 $('#spacebar').empty();
@@ -83,6 +86,17 @@ $(function(){
                 i = 0;
                 console.log("win");
                 prompt();
+                $("#img1").css("animation-name", "example");
+                $("#img1").css("animation-duration", "4s");
+                $("#img2").css("animation-name", "example2");
+                $("#img2").css("animation-duration", "4s");
+
+                // $("#img1").css("animation-name", null);
+                // $("#img1").css("animation-duration", null);
+                // $("#img2").css("animation-name", null);
+                // $("#img2").css("animation-duration", null);
+                // $("#img1").empty();
+                // $("#img2").empty();
                 reset();
             } else {
                 $('#spacebar').empty();
@@ -100,6 +114,17 @@ $(function(){
                 i = 0;
                 console.log("lose");
                 prompt();
+                $("#img1").css("animation-name", "example2");
+                $("#img1").css("animation-duration", "4s");
+                $("#img2").css("animation-name", "example");
+                $("#img2").css("animation-duration", "4s");
+
+                // $("#img1").css("animation-name", null);
+                // $("#img1").css("animation-duration", null);
+                // $("#img2").css("animation-name", null);
+                // $("#img2").css("animation-duration", null);
+                // $("#img1").empty();
+                // $("#img2").empty();
                 reset();
             }
         }
@@ -107,9 +132,9 @@ $(function(){
 })
 
 function loading() {
-    setTimeout(reset,  12000);
-    setTimeout(changeLoad, 7000);
-    setTimeout(foundOpponent, 12000);
+    setTimeout(reset,  1000);
+    setTimeout(changeLoad, 2000);
+    setTimeout(foundOpponent, 3000);
 }
 
 function changeLoad() {

@@ -147,3 +147,68 @@ body{
     padding: 20px;
 }
 
+#img1{
+/*    -webkit-animation-name: example; 
+    -webkit-animation-duration: 4s; 
+    animation-name: example;
+    animation-duration: 4s;*/
+    animation-name: example3;
+    animation-duration: 0s;
+    position: relative;
+    top:380px;
+    left: 20%;
+
+}
+#img2{
+/*    -webkit-animation-name: example2; 
+    -webkit-animation-duration: 4s; 
+    animation-name: example2;
+    animation-duration: 4s;*/
+    animation-name: example3;
+    animation-duration: 0s;
+    position: relative;
+    top:280px;
+    left: 10%;
+
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes example {
+    from {left: 10%;}
+    to {left: 100%;}
+}
+
+/* Standard syntax */
+@keyframes example {
+    from {left: 10%;}
+    to {left: 100%;}
+}
+
+@-webkit-keyframes example2 {
+    from {left: 10%;}
+    to {left: 140%;}
+}
+
+/* Standard syntax */
+@keyframes example2 {
+    from {left: 10%;}
+    to {left: 140%;}
+}
+
+@-webkit-keyframes example3 {
+    from {left: 10%;}
+    to {left: 10%;}
+}
+
+/* Standard syntax */
+@keyframes example3 {
+    from {left: 10%;}
+    to {left: 10%;}
+}
+
+
+#img2{
+
+    /*position: ;*/
+}
+
