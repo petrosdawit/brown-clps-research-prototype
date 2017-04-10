@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Login</title>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="../css/loginPage.css"> 
+
+</head>
+
+<style>
+    .imgBorder {
+        border: 2px solid red;
+    }
+</style>
+
+<body bgcolor= "#8f95a8">
+    <div class="homepage">
+        <center>
+            <p>Username</p>
+            <input type='text' id="userNameField" name= "username" placeholder="Enter a username...."></input> <br> <br>
+            <p> ID Number </p>
+            <input type='text' id="userIDField" name= "userid" placeholder="Enter your given ID"></input> <br> <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+            <img id ="findOppButton" src = "../images/findOppButton.png" onclick="location.href='instructions.html';"> 
+        </center>
+    </div>
+</body>
+
+<script>
+$(document).ready(function(){
+    $('#imageContainer img').click(function(){
+        $('#imageContainer img').removeClass("imgBorder");
+        $(this).addClass("imgBorder");
+    });
+})
+</script>
+
+</html>
