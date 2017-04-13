@@ -54,6 +54,7 @@ body {
 }
 #start:hover {
     background-color: #013499;
+    cursor: pointer;
 }
 #starttext {
     color: white;

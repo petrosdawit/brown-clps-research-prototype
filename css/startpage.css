@@ -24,6 +24,7 @@ body{
 	position: relative;
 	max-width: 25%;
 	max-height: 20%;
+    cursor: pointer;
 	left: 65%;
 	top: 450px;
 }
