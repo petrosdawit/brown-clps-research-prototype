@@ -1,0 +1,30 @@
+{
+  "name": "cs132finalprj",
+  "version": "1.0.0",
+  "description": "final project",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/petrosdawit/cs132finalprj.git"
+  },
+  "author": "many",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/petrosdawit/cs132finalprj/issues"
+  },
+  "homepage": "https://github.com/petrosdawit/cs132finalprj#readme",
+  "dependencies": {
+    "any-db": "^2.1.0",
+    "any-db-mysql": "^2.1.2",
+    "any-db-sqlite3": "^2.1.4",
+    "body-parser": "^1.17.1",
+    "consolidate": "^0.14.5",
+    "express": "^4.15.2",
+    "hogan": "^1.0.2",
+    "socket.io": "^1.7.3"
+  }
+}
