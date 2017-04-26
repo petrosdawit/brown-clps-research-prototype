@@ -8,8 +8,20 @@
       integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
       crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="../css/loginPage.css"> 
+    <link rel="stylesheet" href="../css/loginPage.css">
+    <script src="/socket.io/socket.io.js"></script>
 
+    <link rel="stylesheet" href="../css/loginPage.css">
+    <script>
+        $(document).ready(function(){
+            var socket = io.connect();
+            $("#findOppButton").click(function(){
+                var userid = $("#userIDField").val();
+                var username = $("#userNameField").val();
+                socket.emit('join', {id: userid, name: username});
+            });
+        });
+    </script>
 </head>
 
 <style>
@@ -28,7 +40,7 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-            <img id ="findOppButton" src = "../images/findOppButton.png" onclick="location.href='instructions.html';"> 
+            <img id ="findOppButton" src = "../images/findOppButton.png" onclick="location.href='instructions.html';">
         </center>
     </div>
 </body>

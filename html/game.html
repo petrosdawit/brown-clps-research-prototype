@@ -5,43 +5,45 @@
         <title>Game</title>
         <meta charset="UTF-8">
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <link rel="stylesheet" href="../css/game.css"> 
+        <script src="/socket.io/socket.io.js"></script>
+        <link rel="stylesheet" href="../css/game.css">
         <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=BioRhyme" rel="stylesheet">
     </head>
     <body onload="loading()">
 
-        <center><div id="searching">Finding Your Opponent</div>
-        <div id="loader" class="loader"></div></center>
+        <div id="searching">Finding Your Opponent</div> <!-- deleted <center> replaced in css with text-alignt center -->
+        <div id="loader" class="loader"></div> <!-- center replaced in css with margin:auto -->
 
-        <center><div id="foundOpponent">We found your Opponent.<br>Your game will start in 5 seconds.<br><br>Get Ready!</div>
-        <div style="display:none;" id="countDown"></div></center>
+        <div style="display:none;" id="foundOpponent">We found your Opponent.<br>Your game will start in 5 seconds.<br><br>Get Ready!</div> <!-- deleted center here too -->
+        <div style="display:none;" id="countDown"></div>
 
-     <div id="game">
-        
+     <div style="display:none;" id="game">
+
         <div id="gameBody">
             <div id="infoBar">
               <div id="plyDiv">
-                   <ul id="PlyInfo">
-                        <li id="namePly" value=""> </li>
-                        <li id="tokensPly" value="">  </li>
-                        <li id="pointsPly" value="">  </li>
+                   <ul style="list-style-type: none; display: inline-block;" id="PlyInfo">
+                        <li id="namePly"> </li> <!-- removed value="" form these 3 -->
+                        <li id="tokensPly">  </li>
+                        <li id="pointsPly">  </li>
                    </ul>
               </div>
 
               <div id ="trafficLight">
-                <center><canvas id="myCanvas" width="90" height="140"></center>
+                <canvas id="myCanvas" width="90" height="140"
+                style="border:3px solid #808080;"></canvas> <!--removed center -->
               </div>
 
               <div id="oppDiv">
-                   <ul id="OppInfo">
-                        <li id="nameOpp" value=""> </li>
-                  <li id="tokensOpp" value="">  </li>
-                  <li id="pointsOpp" value="">  </li>
+                   <ul style="list-style-type: none; display: inline-block;" id="OppInfo">
+                        <li id="nameOpp"> </li><!-- removed value="" form these 3 -->
+                  <li id="tokensOpp">  </li>
+                  <li id="pointsOpp">  </li>
                  </ul>
               </div>
           </div>
-             
+
           <div id="stoplight">
 
           </div>
@@ -50,18 +52,18 @@
             <p id="spacebar"> Hit the spacebar!</p>
          </div>
           <div id="player1">
-            <img id ="img1" src="../images/player1.png"/>
+            <img id ="img1" src="../images/player1.png" alt="image1" height="100" width="200" />
           </div>
           <div id="player2">
-            <img id = "img2" src="../images/player2.png"/>  
+            <img id = "img2" src="../images/player2.png" alt="image2" height="100" width="200" />
           </div>
         </div>
-       
+
            <!-- Messages -->
-            
+
         <div id="messages">
             <h2>Messages</h2>
-            <ul id="messagesList"></ul>   
+            <ul id="messagesList"></ul>
         </div>
 
           <!-- The Instructions Modal -->
@@ -97,29 +99,28 @@
 
                 <div id="keepBtn1" class="buttonBackground">
                     <a id="keepLink" href="#" class="buttonLink">
-                    <img src="../images/pointz.png"  height="70" width="70">
+                    <img src="../images/pointz.png" alt="keepbtn" height="70" width="70">
                       <div id="keepCaption" class="caption">Keep your tokens</div>
                     </a>
                   </div>
-                
-                
+
+
                   <div id="convertBtn1" class="buttonBackground">
                     <a id="convertLink" href="#" class="buttonLink">
-                    <img src="../images/tokena.png"  height="70" width="70">  
+                    <img src="../images/tokena.png" alt="convertbtn" height="70" width="70">
                      <div id="convertCaption" class="caption">Convert tokens to points</div>
-                     </a> 
+                     </a>
                   </div>
-                
-               
+
+
                   <div id="deductBtn1" class="buttonBackground">
                      <a id="deductLink" href="#" class="buttonLink">
-                    <img src="../images/negpointz.png" height="70" width="70">
+                    <img src="../images/negpointz.png" alt="deductbtn" height="70" width="70">
                      <div id="deductCaption" class="caption">Deduct points from Bob</div>
                      </a>
                   </div>
 
             </div>
-
           </div>
 
           <!-- The Lose Modal -->
@@ -129,30 +130,30 @@
               <h1>You Lost.</h1>
               <p>Your opponent deducted 100 points</p>
               <p>Your tokens are worth ___ points.</p>
-              
+                  <!-- switched all links to same with 2 keeplink = keeplink2 same with captions-->
                   <div id="keepBtn2" class="buttonBackground">
-                    <a id="keepLink" href="#" class="buttonLink">
-                    <img src="../images/pointz.png"  height="70" width="70">
-                      <div id="keepCaption" class="caption">Keep your tokens</div>
+                    <a id="keepLink2" href="#" class="buttonLink">
+                    <img src="../images/pointz.png" alt="keepbtn" height="70" width="70">
+                      <div id="keepCaption2" class="caption">Keep your tokens</div>
                     </a>
                   </div>
-                
-                
+
+
                   <div id="convertBtn2" class="buttonBackground">
-                    <a id="convertLink" href="#" class="buttonLink">
-                    <img src="../images/tokena.png"  height="70" width="70">  
-                     <div id="convertCaption" class="caption">Convert tokens to points</div>
-                     </a> 
-                  </div>
-                
-               
-                  <div id="deductBtn2" class="buttonBackground">
-                     <a id="deductLink" href="#" class="buttonLink">
-                    <img src="../images/negpointz.png" height="70" width="70">
-                     <div id="deductCaption" class="caption">Deduct points from Bob</div>
+                    <a id="convertLink2" href="#" class="buttonLink">
+                    <img src="../images/tokena.png" alt="convert" height="70" width="70">
+                     <div id="convertCaption2" class="caption">Convert tokens to points</div>
                      </a>
                   </div>
-                
+
+
+                  <div id="deductBtn2" class="buttonBackground">
+                     <a id="deductLink2" href="#" class="buttonLink">
+                    <img src="../images/negpointz.png" alt="deduct" height="70" width="70">
+                     <div id="deductCaption2" class="caption">Deduct points from Bob</div>
+                     </a>
+                  </div>
+
             </div>
 
           </div>
@@ -165,9 +166,11 @@
               <h1>Convert Tokens</h1>
               <p>You have 5 tokens that are worth 100 points each.</p>
               <p>Enter the amount of tokens to convert.</p>
+
               <input type="text" name="tokensToConvert"   id="tokensConvert">
               <input type="hidden" name="username" id="usernameId" value="">
               <input type="submit" id = "enterId" value="Enter">
+
             </div>
 
           </div>
@@ -182,7 +185,7 @@
               <p>Enter the amount of points you want to deduct.</p>
               <input type="text" name="pointsToDeduct"   id="pointsDeduct">
               <input type="hidden" name="username" id="usernameId" value="">
-              <input type="submit" id = "enterId" value="Enter">
+              <input type="submit" id = "deductId" value="Enter">
             </div>
 
           </div>
@@ -198,14 +201,13 @@
                       <input type="hidden" name="username" id="usernameId" value="">
                       <input type="submit" id = "submitId" value="Send">
                   </div>
-                  <button id="instBtn" class="button">Instructions</button>
+                  <button id="instBtn" class="button">Instructions</button><br><br>
+                  <button id="nextBtn" class="butotn">Next Round</button>
             </div>
 
           </div>
+        </div> <!-- added this div close delete if it breaks things -->
 
-
-        
-
-    <script src="../js/game.js"></script>     
+    <script src="../js/game.js"></script>
     </body>
 </html>
