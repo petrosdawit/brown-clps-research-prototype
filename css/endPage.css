@@ -1,0 +1,65 @@
+body {
+    background-image: url("../images/backgroundTrack.png");
+    background-size: cover;
+}
+
+@font-face {
+    font-family: "arcade";
+    src: url("../fonts/ARCADE.TTF");
+}
+
+@font-face {
+    font-family: "kirby";
+    src: url("../fonts/kirbyss.ttf");
+}
+
+@font-face {
+    font-family: "atari";
+    src: url("../fonts/atarifull.ttf");
+}
+
+
+#instructions {
+    margin: auto;
+    border-radius: 10px;
+    padding-bottom: 40px;
+    height: 550px;
+    width: 700px;
+    background-color: white;
+    /*box-shadow: 5px 5px 5px lightgrey;*/
+    border-color: blue;
+
+
+}
+#header {
+    font-size: 50px;
+    text-align: center;
+    padding-top: 40px;
+    font-family: kirby;
+}
+#main {
+    font-size: 16px;
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-family: atari;
+}
+#start {
+    width:260px;
+    height: 90px;
+    margin: auto;
+    background-color: #1967e5;
+    border-radius: 10px;
+
+}
+#start:hover {
+    background-color: #013499;
+}
+#starttext {
+    color: white;
+    font-size: 60px;
+    text-align: center;
+    padding-top: 26px;
+    padding-left: 8px;
+    font-family: arcade;
+}

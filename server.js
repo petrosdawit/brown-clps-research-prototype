@@ -27,21 +27,32 @@ app.get('/',function (req, res) {
 var conn = anyDB.createConnection('sqlite3://game.db');
 
 var ctablesql = "CREATE TABLE IF NOT EXISTS game (id INTEGER PRIMARY KEY AUTOINCREMENT, "
-    + "userid TEXT, name TEXT, round TEXT, winner INTEGER, action TEXT, "
-    + "pointsPly INTEGER, pointsOpp INTEGER, tokensPly INTEGER, tokensOpp INTEGER, message TEXT, time TEXT);";
+    + "userid TEXT, name TEXT, trial INTEGER, outcome INTEGER, response INTEGER, time DECIMAL, "+
+    "tokensPlyPre INTEGER, tokensPly INTEGER, pointsPlyPre INTEGER, pointsPly INTEGER, message TEXT, "
+    + "tokensOppPre INTEGER, tokensOpp INTEGER, pointsOppPre INTEGER, pointsOpp INTEGER, cmessage TEXT);";
+
+var ctablesql2 = "CREATE TABLE IF NOT EXISTS survey (id INTEGER PRIMARY KEY AUTOINCREMENT, "
+    + "userid TEXT, name TEXT, question INTEGER, result INTEGER);";
 
 var q = conn.query(ctablesql, function(err, data){
         console.log("TABLE CREATED", err, data);
         if(err!= null){
-            console.log("Error creating table message");
+            console.log("Error creating table game");
         }
+});
+
+conn.query(ctablesql2, function(err, data){
+    console.log("Table2 Created", err, data);
+    if(err!= null){
+        console.log("Error createing table survey");
+    }
 });
 
 /* Hard coded messages and names for computer */
 var name, id = null;
 var round = 1;
-var compNames = ["Bob", "Joey", "Chandler", "Rachel", "Ross"];
-var random = Math.floor((Math.random() * 5));
+var compNames = ["Taylor", "Joey", "Ryan", "Pat", "Skyler", "Jordan"];
+var random = Math.floor((Math.random() * 6));
 var compName = compNames[random];
 var compMessages = ["I could beat you with my eyes closed", "Talk about a loser", "Maybe next time buddy", "Are you trying to lose???"];
 
@@ -79,15 +90,15 @@ io.on('connection', function(socket){
     socket.on('action', function(data){
         console.log("Did Action!");
         console.log(data);
-        conn.query("INSERT INTO game (userid, name, round, winner, action, pointsPly, pointsOpp, tokensPly, tokensOpp) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)",
-            [id, name, data.rounds, data.winner, data.action, data.pointsPly, data.pointsOpp, data.tokensPly, data.tokensOpp], function(error, data2){
+        conn.query("INSERT INTO game (userid, name, trial, outcome, response, time, tokensPlyPre, tokensPly, pointsPlyPre, pointsPly, tokensOppPre, tokensOpp, pointsOppPre, pointsOpp) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)",
+            [id, name, data.rounds, data.winner, data.action, data.time, data.tokensPlyPre, data.tokensPly, data.pointsPlyPre, data.pointsPly, data.tokensOppPre, data.tokensOpp, data.pointsOppPre, data.pointsOpp], function(error, data2){
                 if (error!=null) console.log("Error inserting into game");
         });
         round += 1;
     });
     //Update db when message is sent
     socket.on('message', function(data){
-        conn.query("UPDATE game SET message=$1 WHERE userid=$2 AND round=$3", [data.message, id, data.rounds], function(error, data2){
+        conn.query("UPDATE game SET message=$1 WHERE userid=$2 AND trial=$3", [data.message, id, data.rounds], function(error, data2){
             if (error!=null) console.log("Error inserting message");
         });
     });

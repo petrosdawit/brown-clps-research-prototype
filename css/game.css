@@ -99,6 +99,37 @@ body{
     cursor: default;
 }
 
+
+
+.modalInfo{
+    position: relative;
+    display: inline-block;
+    vertical-align:middle;
+}
+
+#plyModal{
+    float: left;
+}
+
+#oppModal{
+    float: right;
+   
+    margin-right: 50px;
+}
+
+#namePlyLose, #namePlyWin, #nameOppLW, #nameOppWin{
+    text-decoration: underline;
+    margin-bottom: 10px;
+}
+
+#modalPart2, #modalPart2L{
+    margin: auto;
+}
+
+#modalPart3, #modalPart3L{
+    margin-top: 80px;
+}
+
 a.buttonLink{
     position: relative;
     display: inline-block;
@@ -115,6 +146,14 @@ a.buttonLink{
 
 #instBtn{
     margin-top: 30px;
+    vertical-align:middle;
+    height: 30px;
+    font-size: 15px;
+    font-family: "arcade";
+}
+
+#tokenBtn1, #tokenBtn2{
+    margin-top: 20px;
     vertical-align:middle;
     height: 30px;
     font-size: 15px;
@@ -165,8 +204,22 @@ a.buttonLink{
 
 }
 
-#inst{
+#inst, #tokenModal{
     z-index:100000;
+}
+
+table{
+    width: 100%;
+    height: 100%;
+    margin-top: 100px;
+    font-size: 15px;
+}
+
+table, th, td{
+    text-align: center;
+    border: 1px solid black;
+    margin-left:auto; 
+    margin-right:auto; 
 }
 
 .loader {
