@@ -37,6 +37,7 @@ p{
     font-family: "arcade";
 	font-size: 30px;
     position: relative;
+    text-align: center;
 }
 #userNameField, #userIDField{
 	font-family: "arcade";
@@ -45,4 +46,15 @@ p{
     height:30px;
     width: 250px;
     padding-left: 20px;
+    text-align: center;
+    margin: auto;
+}
+
+.imgBorder {
+    border: 2px solid red;
+}
+
+#homepage {
+    margin:auto;
+    text-align:center;
 }

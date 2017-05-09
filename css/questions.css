@@ -1,0 +1,33 @@
+input[type="radio"]{
+    margin: 0 2px 0 10px;
+    vertical-align: middle;
+
+}
+#header{
+    text-align: center;
+    font-weight: bold;
+}
+
+.instr {
+    text-align: center;
+}
+
+ol {
+    display: table;
+    margin:auto;
+}
+
+li{
+    margin: 2px 0 5px 0;
+}
+#center{
+    text-align: center;
+    font-weight: bold;
+}
+#debrief{
+    text-align: center;
+}
+#submit {
+    height: 40px;
+    width: 200px;
+}

@@ -1,4 +1,4 @@
-@font-face{
+ @font-face{
     font-family:"arcade";
     src:url("../fonts/arcade.ttf");
 }
@@ -39,6 +39,8 @@ body{
     height:100px;
     text-align: left;
     width:200px;
+    color: black;
+    background-color: white;
 
 }
 
@@ -54,6 +56,8 @@ body{
     right:0px;
     height:100px;
     width:200px;
+    color: black;
+    background: white;
 
 }
 
@@ -61,7 +65,7 @@ body{
     top: 0px;
     width: 100%;
     overflow: auto;
-    background: url("../images/backgroundTrack.png") no-repeat center center;
+    /*background: url("../images/backgroundTrack.png") no-repeat center center;*/
     background-size: 100% 100%;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
@@ -113,7 +117,7 @@ body{
 
 #oppModal{
     float: right;
-   
+
     margin-right: 50px;
 }
 
@@ -160,12 +164,16 @@ a.buttonLink{
     font-family: "arcade";
 }
 
-#nextBtn{
+#nextBtn, #messageButton{
     /*margin-top: 80px;*/
     vertical-align:middle;
     height: 30px;
     font-size: 15px;
     font-family: "arcade";
+}
+
+#messageButton{
+    margin-top: 50px;
 }
     /* The Close Button */
 .close {
@@ -218,8 +226,8 @@ table{
 table, th, td{
     text-align: center;
     border: 1px solid black;
-    margin-left:auto; 
-    margin-right:auto; 
+    margin-left:auto;
+    margin-right:auto;
 }
 
 .loader {
@@ -321,13 +329,15 @@ table, th, td{
     -webkit-animation-duration: 4s;
     animation-name: example;
     animation-duration: 4s;*/
-    animation-name: example3;
+    animation-name: example3_img1;
     animation-duration: 0s;
-    position: relative;
-    top:65px;
+    /*position: relative;*/
+    position: absolute;
+    top: 44%;
     padding:0;
     margin: 0px;
     left: 20%;
+    height:100px;
 
 }
 #img2{
@@ -335,56 +345,154 @@ table, th, td{
     -webkit-animation-duration: 4s;
     animation-name: example2;
     animation-duration: 4s;*/
-    animation-name: example3;
+    animation-name: example3_img2;
     animation-duration: 0s;
+    position: absolute;
     padding: 0;
     margin: 0px;
-    bottom: 30px;
-    position: relative;
+    top: 46%;
     height: 100px;
     left: 10%;
 
 }
 
+@media (min-height: 375px){
+    #img1{
+        position: absolute;
+        top: 34%;
+    }
+    #img2{
+        position: absolute;
+        top: 37%;
+    }
+}
+
+@media (min-height: 475px){
+    #img1{
+        position: absolute;
+        top: 37%;
+    }
+    #img2{
+        position: absolute;
+        top: 40%;
+    }
+}
+
+@media (min-height: 575px){
+    #img1{
+        position: absolute;
+        top: 42%;
+    }
+    #img2{
+        position: absolute;
+        top: 45%;
+    }
+}
+
+@media (min-height: 675px){
+    #img1{
+        position: absolute;
+        top: 43%;
+    }
+    #img2{
+        position: absolute;
+        top: 46%;
+    }
+}
+
+@media (min-height: 775px){
+    #img1{
+        position: absolute;
+        top: 47%;
+    }
+    #img2{
+        position: absolute;
+        top: 50%;
+    }
+}
+@media (min-height: 875px){
+    #img1{
+        position: absolute;
+        top: 51%;
+    }
+    #img2{
+        position: absolute;
+        top: 53%;
+    }
+}
+
+/*Image 1*/
 /* Safari 4.0 - 8.0 */
-@-webkit-keyframes example {
+@-webkit-keyframes example_img1 {
+    from {left: 20%;}
+    to {left: 100%;}
+}
+
+/* Standard syntax */
+@keyframes example_img1 {
+    from {left: 20%;}
+    to {left: 100%;}
+}
+
+/*Image 2*/
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes example_img2 {
     from {left: 10%;}
     to {left: 100%;}
 }
 
 /* Standard syntax */
-@keyframes example {
+@keyframes example_img2 {
     from {left: 10%;}
     to {left: 100%;}
 }
 
-@-webkit-keyframes example2 {
+/*Image 1*/
+@-webkit-keyframes example2_img1 {
+    from {left: 20%;}
+    to {left: 140%;}
+}
+
+/* Standard syntax */
+@keyframes example2_img1 {
+    from {left: 20%;}
+    to {left: 140%;}
+}
+
+/*Image 2*/
+@-webkit-keyframes example2_img2 {
     from {left: 10%;}
     to {left: 140%;}
 }
 
 /* Standard syntax */
-@keyframes example2 {
+@keyframes example2_img2 {
     from {left: 10%;}
     to {left: 140%;}
 }
 
-@-webkit-keyframes example3 {
+@-webkit-keyframes example3_img1 {
     from {left: 10%;}
+    to {left: 20%;}
+}
+
+/* Standard syntax */
+@keyframes example3_img1 {
+    from {left: 10%;}
+    to {left: 20%;}
+}
+
+@-webkit-keyframes example3_img2 {
+    from {left: 0%;}
     to {left: 10%;}
 }
 
 /* Standard syntax */
-@keyframes example3 {
-    from {left: 10%;}
+@keyframes example3_img2 {
+    from {left: 0%;}
     to {left: 10%;}
 }
 
-
-#img2{
-
-    /*position: ;*/
-}
 
 
 

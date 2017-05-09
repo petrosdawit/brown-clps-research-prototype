@@ -20,9 +20,9 @@
         <div style="display:none;" id="countDown"></div>
 
      <div style="display:none;" id="game">
-        
+
         <!-- commented music out for now<embed src="background_music.mp3" width="0" height="0" loop="false" autostart="false" hidden="true" /> -->
-        
+
 
         <div id="gameBody">
             <div id="infoBar">
@@ -42,7 +42,7 @@
               <div id="oppDiv">
                   <ul style="list-style-type: none; display: inline-block;" id="OppInfo">
                   <li id="nameOpp"> </li><!-- removed value="" form these 3 -->
-                  <li id="tokensOpp">  </li>
+                  <li id="tokensOpp"> </li>
                   <li id="pointsOpp">  </li>
                  </ul>
               </div>
@@ -93,8 +93,8 @@
           </div>
 
 
-          <!-- The Win Modal -->
-          <div id="win" class="modal">
+          <!-- The Round Modal -->
+          <div id="round" class="modal">
 
             <div class="modal-content">
                 <div id="modalPart1">
@@ -107,8 +107,8 @@
                 </div>
 
                 <div id='modalText' class="modalInfo">
-                   <h1>You won!</h1>
-                  <p>You earned 1 token.</p>
+                   <h1 id="roundh1"></h1>
+                    <p id="roundInfo"><br><br>
                 </div>
 
                 <div id="oppModal" class="modalInfo">
@@ -125,7 +125,7 @@
                 <div id="keepBtn1" class="buttonBackground">
                     <a id="keepLink" href="#" class="buttonLink">
                     <img src="../images/pointz.png" alt="keepbtn" height="70" width="70">
-                      <div id="keepCaption" class="caption">Keep your tokens</div>
+                      <div id="keepCaption" class="caption">Keep tokens</div>
                     </a>
                   </div>
 
@@ -133,7 +133,7 @@
                   <div id="convertBtn1" class="buttonBackground">
                     <a id="convertLink" href="#" class="buttonLink">
                     <img src="../images/tokena.png" alt="convertbtn" height="70" width="70">
-                     <div id="convertCaption" class="caption">Convert tokens to points</div>
+                     <div id="convertCaption" class="caption">Convert to points</div>
                      </a>
                   </div>
 
@@ -141,80 +141,19 @@
                   <div id="deductBtn1" class="buttonBackground">
                      <a id="deductLink" href="#" class="buttonLink">
                     <img src="../images/negpointz.png" alt="deductbtn" height="70" width="70">
-                     <div id="deductCaption" class="caption">Deduct points from Bob</div>
+                     <div id="deductCaption" class="caption">Deduct points</div>
                      </a>
                   </div>
 
             </div>
 
-            <div id="modalPart3">
-              <button id="tokenBtn1" class="button">Conversion Chart</button>
+            <div id="messageButton">
+              <button id="mesgBtn" class="button">Send A Message</button>
             </div>
+
           </div>
         </div>
-          <!-- The Lose Modal -->
-          <div id="lose" class="modal">
-
-            <div class="modal-content">
-              <div id="modalPart1L">
-                  <div id="plyModal" class="modalInfo">
-                     <ul style="list-style-type: none; display: inline-block;" >
-                          <li id="namePlyLose"> </li> <!-- removed value="" form these 3 -->
-                          <li id="tokensPlyLose"> </li>
-                          <li id="pointsPlyLose">  </li>
-                     </ul>
-                </div>
-
-                <div id='modalText' class="modalInfo">
-                   <h1>You Lost.</h1>
-                  <p id="deduction"></p>
-                  <p id="lostInfo"></p>
-                </div>
-
-                <div id="oppModal" class="modalInfo">
-                    <ul style="list-style-type: none; display: inline-block;">
-                    <li id="nameOppLose"> </li><!-- removed value="" form these 3 -->
-                    <li id="tokensOppLose">  </li>
-                    <li id="pointsOppLose">  </li>
-                   </ul>
-                </div>
-             </div>
-
-             <div id="modalPart2L">
-
-                  <!-- switched all links to same with 2 keeplink = keeplink2 same with captions-->
-                  <div id="keepBtn2" class="buttonBackground">
-                    <a id="keepLink2" href="#" class="buttonLink">
-                    <img src="../images/pointz.png" alt="keepbtn" height="70" width="70">
-                      <div id="keepCaption2" class="caption">Keep your tokens</div>
-                    </a>
-                  </div>
-
-
-                  <div id="convertBtn2" class="buttonBackground">
-                    <a id="convertLink2" href="#" class="buttonLink">
-                    <img src="../images/tokena.png" alt="convert" height="70" width="70">
-                     <div id="convertCaption2" class="caption">Convert tokens to points</div>
-                     </a>
-                  </div>
-
-
-                  <div id="deductBtn2" class="buttonBackground">
-                     <a id="deductLink2" href="#" class="buttonLink">
-                    <img src="../images/negpointz.png" alt="deduct" height="70" width="70">
-                     <div id="deductCaption2" class="caption">Deduct points from Bob</div>
-                     </a>
-                  </div>
-              </div>
-
-                <div id="modalPart3L">
-                  <button id="tokenBtn2" class="button">Conversion Chart</button>
-                </div>
-
-            </div>
-
-          </div>
-
+          
                <!-- Convert Modal -->
           <div id="convertModal" class="modal">
 
@@ -226,7 +165,8 @@
 
               <input type="text" name="tokensToConvert"   id="tokensConvert">
               <input type="hidden" name="username" id="usernameId" value="">
-              <input type="submit" id = "enterId" value="Enter">
+              <input type="submit" id = "enterId" value="Enter"><br><br>
+              <button id="tokenBtn1" class="button">Conversion Chart</button>
 
             </div>
 
@@ -238,11 +178,12 @@
             <div class="modal-content">
               <span class="close3" style="float:left;">&times;</span>
               <h1>Deduct Points</h1>
-              <p>Bob has ___ Points</p>
-              <p>Enter the amount of points you want to deduct.</p>
-              <input type="text" name="pointsToDeduct"   id="pointsDeduct">
+              <p id="deductPoints"></p>
+              <p>Enter the amount of points that you will like to deduct in token units.</p>
+              <input type="text" name="pointsToDeduct"   id="tokensDeduct">
               <input type="hidden" name="username" id="usernameId2" value=""> <!-- 2 -->
-              <input type="submit" id = "deductId" value="Enter">
+              <input type="submit" id = "deductId" value="Enter"><br><br>
+              <button id="tokenBtn2" class="button">Conversion Chart</button>
             </div>
 
           </div>
@@ -251,8 +192,7 @@
           <div id="messageModal" class="modal">
 
             <div class="modal-content">
-              <span class="close4" style="float:left;">&times;</span>
-              <h1>Send a message to Bob!</h1>
+              <h1 id="messageHeader"></h1>
                   <div id="inputId">
                       <input type="text" name="message"  id="messageId">
                       <input type="hidden" name="username" id="usernameId3" value=""> <!-- 3 -->
@@ -273,7 +213,7 @@
                 <h2>Token Conversions</h2>
               </div>
               <div class="modal-body">
-               
+
                   <table id="tokenTable">
                     <tr>
                       <th>Number of Saved Tokens</th>
@@ -304,7 +244,7 @@
                       <td>125</td>
                     </tr>
                   </table>
-                
+
               </div>
             </div>
 
@@ -313,12 +253,37 @@
                 <!-- Results Modal -->
           <div id="resultModal" class="modal">
 
-            <div class="modal-content">
-              <h1 id="resultHeader"></h1>
-                  <div id="resultsInfo">
-                    <p>Please click on the button below for the questionaire.
+            <div id="resultModalContent" class="modal-content">
+
+                   <div id="resultsPart1">
+
+                      <div id="resultsInfo">
+                        <h1 id="resultHeader"></h1>
+                        <p>Please click on the button below for the questionaire.
+                      </div>
+
                   </div>
-                  <button id="questionBtn" class="button">Questionaire</button>
+
+                  <div id="resultsPart2">
+                       <div id="plyModal" class="modalInfo">
+                         <ul style="list-style-type: none; display: inline-block;" >
+                              <li id="namePlyR"> </li> <!-- removed value="" form these 3 -->
+                              <li id="tokensPlyR"> </li>
+                              <li id="pointsPlyR">  </li>
+                         </ul>
+                      </div>
+                      <div id="oppModal" class="modalInfo">
+                        <ul style="list-style-type: none; display: inline-block;">
+                        <li id="nameOppR"> </li><!-- removed value="" form these 3 -->
+                        <li id="tokensOppR">  </li>
+                        <li id="pointsOppR">  </li>
+                       </ul>
+                      </div>
+                  </div>
+
+                  <div id="resultsPart3">
+                    <button id="questionBtn" class="button">Questionaire</button>
+                  </div>
             </div>
 
           </div>

@@ -18,40 +18,58 @@
             $("#findOppButton").click(function(){
                 var userid = $("#userIDField").val();
                 var username = $("#userNameField").val();
-                socket.emit('join', {id: userid, name: username});
+                var regName = new RegExp("^[0-9]*[a-zA-Z]+[a-zA-Z0-9]*$");
+                var regId = new RegExp("^(?=.*[a-zA-Z])(?=.*[0-9])");
+                var matchName = regName.test(username);
+                var matchId = regId.test(userid);
+                console.log(matchName);
+                console.log(matchId);
+                if(matchName && username!='' && matchId && userid!=''){
+
+                    window.location.href='instructions.html';
+                    socket.emit('join', {id: userid, name: username});
+                }else{
+
+                    if( !(matchName) || username==''){
+                        alert("Please enter valid username");
+
+                    }else{
+                        alert("Please enter valid id");
+                    }
+                }
+                //socket.emit('join', {id: userid, name: username});
+                socket.emit("masterPageCheck", {});
+                socket.on("masterPageLogin", function(data){
+                    window.location.replace("masterPage.html");
+                });
+                socket.on("masterPage", function(data){
+                    if (data.masterPage == true){
+                        window.location.replace("masterPage.html");
+                    }
+                });
             });
+            $('#imageContainer img').click(function(){
+            $('#imageContainer img').removeClass("imgBorder");
+            $(this).addClass("imgBorder");
+    });
         });
     </script>
 </head>
 
-<style>
-    .imgBorder {
-        border: 2px solid red;
-    }
-</style>
+<body> <!--  bgcolor= "#8f95a8" -->
+    <div id="homepage">
+        <!-- deleted center tag here -->
+        <p>Username</p>
+        <input type='text' id="userNameField" name= "username" placeholder="Enter a username...."> <br> <br>
+        <p> ID Number </p>
+        <input type='text' id="userIDField" name= "userid" placeholder="Enter your given ID"> <br> <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-<body bgcolor= "#8f95a8">
-    <div class="homepage">
-        <center>
-            <p>Username</p>
-            <input type='text' id="userNameField" name= "username" placeholder="Enter a username...."></input> <br> <br>
-            <p> ID Number </p>
-            <input type='text' id="userIDField" name= "userid" placeholder="Enter your given ID"></input> <br> <br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <img id ="findOppButton" src = "../images/findOppButton.png" alt="findbuttn">
 
-            <img id ="findOppButton" src = "../images/findOppButton.png" onclick="location.href='instructions.html';">
-        </center>
     </div>
 </body>
 
-<script>
-$(document).ready(function(){
-    $('#imageContainer img').click(function(){
-        $('#imageContainer img').removeClass("imgBorder");
-        $(this).addClass("imgBorder");
-    });
-})
-</script>
 
 </html>

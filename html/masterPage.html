@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Master Page</title>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+
+<!--       <link rel="stylesheet" href="../css/startpage.css">
+      <link href="https://fonts.googleapis.com/css?family=BioRhyme" rel="stylesheet"> -->
+
+</head>
+
+<body>
+
+    <script>
+
+    $(document).ready(function(){
+        var csv = [["id", "userid", "name", "trial", "outcome", "response", "time", "tokensPlyPre", "tokensPly", "pointsPlyPre", "pointsPly", "message", "tokensOppPre", "tokensOpp", "pointsOppPre", "pointsOpp", "cmessage"]];
+        var socket = io.connect();
+        socket.emit("download", {});
+        socket.on("downloadAll", function(data){
+            var arr = $.map(data.info, function(el) { return el;});
+            updateCSVarr(arr, csv);
+            var csvReadable = makeDownloadble(csv);
+            console.log(csvReadable);
+            $(".export").on('click', function (event) {
+                exportTableToCSV.apply($(".export"), [csvReadable, 'completeData.csv']);
+            });
+        });
+        $("#changePass").click(function(){
+            var userid = $("#userIDField").val();
+            var username = $("#userNameField").val();
+            socket.emit('changePassword', {userid: userid, name: username});
+        });
+    });
+
+    function updateCSVarr(data, csv){
+        for(var i = 0; i < data.length; i++) {
+            var id = data[i].id;
+            var userid = data[i].userid;
+            var name = data[i].name;
+            var trial =data[i].trial;
+            var outcome = data[i].outcome;
+            var response = data[i].response;
+            var time = data[i].time;
+            var tokensPlyPre = data[i].tokensPlyPre;
+            var tokensPly = data[i].tokensPly;
+            var pointsPlyPre = data[i].pointsPlyPre;
+            var pointsPly = data[i].pointsPly;
+            var message = data[i].message;
+            var tokensOppPre = data[i].tokensOppPre;
+            var tokensOpp = data[i].tokensOpp;
+            var pointsOppPre = data[i].pointsOppPre;
+            var pointsOpp = data[i].pointsOpp;
+            var cmessage = data[i].cmessage;
+            csv.push([id, userid, name, trial, outcome, response, time, tokensPlyPre, tokensPly, pointsPlyPre,pointsPly, message, tokensOppPre, tokensOpp, pointsOppPre, pointsOpp, cmessage]);
+        }
+    }
+
+    function exportTableToCSV(csv, filename) {
+     // Data URI
+        var csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv);
+        //alert(csv);
+        $(".export")
+            .attr({
+                'download': filename,
+                'href': csvData,
+                'target': '_blank'
+        });
+    }
+
+    function makeDownloadble(csv){
+        var i;
+        var csvReadable = "";
+        for (i = 0; i < csv.length; i++){
+            var j;
+            for (j = 0; j < csv[i].length; j++){
+                if (csv[i][j] == null){
+                    csvReadable += " " + ","
+                } else {
+                    csvReadable += csv[i][j].toString() + ","
+                }
+            }
+            csvReadable += "\n"
+        }
+        return csvReadable;
+    }
+
+    </script>
+
+    <p> Master Page </p>
+    <p> The download link will download all the data from the database in a csv file format. </p>
+    <p> On this page here, you can also change your password and username for the masterPage. </p>
+    <p> If you haven't already made a password, make one below. </p>
+    <p> For password related issues, email petros_dawit@brown.edu. Please don't restart and delete the game.db file. This is your database with all the data. </p>
+
+    <p>Change Username</p>
+    <input type='text' id="userNameField" name= "username" placeholder="Enter a new username...."></input> <br> <br>
+    <p>Change ID Password</p>
+    <input type='text' id="userIDField" name= "userid" placeholder="Enter a new ID Password"></input> <br> <br>
+
+    <button id ="changePass"> Submit Username/Password Changes </button>
+
+    <p> Press back to go to the start page. </p>
+
+    <button type = "button" onclick="location.href='/';">  Back </button>
+    <a href="#" class="export">Download CSV File</a>
+
+
+</body>
+
+
+
+
+</html>

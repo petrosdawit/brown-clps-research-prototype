@@ -1,7 +1,11 @@
 var socket = io.connect();
-var numRounds = 7;
+var numRounds = 10;
 var round = 1;
+var isSpaceFlag=false;
 var gameArr = new Array(numRounds);
+var numPoints = numRounds * 5 * 125;
+var t0 = 0;
+var t1 = 0;
 //keeps track of who is supposed to win each round
 for (var i = 0; i<gameArr.length; i++){
     if (i%3== 0 || i%7 == 0 || i%10 == 0){
@@ -11,7 +15,8 @@ for (var i = 0; i<gameArr.length; i++){
     }
 }
 var index = 0;
-var sound = new Audio("Mariokart.mp3");
+var sound = new Audio("background_music.mp3");
+sound.play();
 var i = 0;
 
 var canvas = document.getElementById("myCanvas");
@@ -38,11 +43,7 @@ var instBtn = document.getElementById("instBtn");
 var span1 = document.getElementsByClassName("close1")[0];
 
 // Get the win modal
-var winModal = document.getElementById('win');
-
-
-// Get the lose modal
-var loseModal = document.getElementById('lose');
+var roundModal = document.getElementById('round');
 
 //get convertModal
 var convertModal = document.getElementById('convertModal');
@@ -58,12 +59,13 @@ var span3 = document.getElementsByClassName("close3")[0];
 
 var messageModal = document.getElementById('messageModal');
 
-// Get the <span> element that closes the message modal
-var span4 = document.getElementsByClassName("close4")[0];
 
 var tokenModal = document.getElementById('tokenModal');
 
-// Get the <span> element that closes the message modal
+//**CHANGE can delete span 4
+
+
+// Get the <span> element that closes the token modal
 var span5 = document.getElementsByClassName("close5")[0];
 
 var tokenBtn1 = document.getElementById("tokenBtn1");
@@ -101,11 +103,6 @@ span3.onclick = function() {
 
 }
 
-// When the user clicks on <span> (x), close the messages modal
-span4.onclick = function() {
-    messageModal.style.display = "none";
-    reset();
-}
 
 tokenBtn1.onclick = function() {
     tokenModal.style.display = "block";
@@ -117,7 +114,7 @@ tokenBtn2.onclick = function() {
 // When the user clicks on <span> (x), close the messages modal
 span5.onclick = function() {
     tokenModal.style.display = "none";
-    
+
 }
 
 
@@ -129,30 +126,48 @@ window.onclick  = function(event) {
 
         }
 
+        //delete other modals
     else if (event.target == instModal) {
         instModal.style.display = "none";
     }
 
-    else if(event.target == convertModal){
-        messageModal.style.display = "block";
-
-        convertModal.style.display = "none";
-
-
-    } else if(event.target == messageModal){
-        messageModal.style.display = "none";
-
-        reset();
-
-    } else if(event.target == tokenModal){
+    else if(event.target == tokenModal){
          tokenModal.style.display = "none";
     }
 }
 
+function addinc(){
 
+        if (round<4) {
+            $('#gameBody').css('background', 'url(../images/backgroundTrack.png) no-repeat center center');
+            $('#gameBody').css('background-size', '100% 100%');
+        }
+        else if (round < 7 && round >= 4) {
+            $('#gameBody').css('background', 'url(../images/backgroundTrack2.png) no-repeat center center');
+            $('#gameBody').css('background-size', '100% 100%');
+        }
+        else if (round < 10 && round >= 7) {
+            $('#gameBody').css('background', 'url(../images/backgroundTrack3.png) no-repeat center center');
+            $('#gameBody').css('background-size', '100% 100%');
+        }
+         else if (round < 13 && round >= 10) {
+            $('#gameBody').css('background', 'url(../images/backgroundTrack4.png) no-repeat center center');
+            $('#gameBody').css('background-size', '100% 100%');
+
+        }
+
+    }
 //variables for game
 
  $(document).ready(function() {
+    $('#gameBody').css('background', 'url(../images/backgroundTrack.png) no-repeat center center');
+    $('#gameBody').css('background-size', '100% 100%');
+
+    var time = 0;
+
+
+
+    var clockint = setInterval(addinc, 1000)
    $(window).resize(function() {
         var bodyheight = $(document).height()-130;
         var player1= bodyheight-130;
@@ -169,6 +184,11 @@ window.onclick  = function(event) {
         $("#namePlyLose").html(data.username);
         $("#nameOppWin").html(data.compName);
         $("#nameOppLose").html(data.compName);
+        //CHANGE add the following lines
+        $("#namePlyR").html(data.username);
+        $("#nameOppR").html(data.compName);
+        $("#deductPoints").html(data.compName);
+        $("#messageHeader").html("Send a message to "+data.compName+"!");
         console.log(data.username);
         console.log(data.userid);
         setUpInfoBar(data.username, data.compName);
@@ -182,7 +202,7 @@ window.onclick  = function(event) {
    });
 
 });
-
+var autoloss = null;
 /* Resets the gamepage to get ready for next round */
 function reset(){
         $("#PlyInfo").show();
@@ -213,12 +233,19 @@ function reset(){
                 $('#spacebar').show();
                 //$("#img1").css("animation-name", "example3");
                 $("#img1").css("animation-duration", 0);
-                //$("#img2").css("animation-name", "example3");
+                // $("#img2").css("animation-name", "example3");
                 $("#img2").css("animation-duration", 0);
                 //$("#spacebar").append("Hit the spacebar!");
                 var hitSpace = window.setInterval(function(){
                     $('#spacebar').hide();
                 }, 1000);
+                isSpaceFlag = true;
+                autoloss = setTimeout(function(){
+                    console.log("Autolosing");
+                    var e = $.Event("keypress", {keyCode:80});
+                    console.log(e);
+                    $(document).trigger(e);
+                }, 3000);
             }
         }, 830);
 
@@ -229,11 +256,16 @@ function reset(){
 $(function(){
     $(document).keypress(function(e){
         // If spacebar is hit
-        if (e.keyCode == 32 && i > 2){
+        console.log(e);
+    console.log(isSpaceFlag);
+    if (isSpaceFlag == true){
+        if ((e.keyCode == 32 && i > 2) || e.keyCode == 80){
+            isSpaceFlag = false;
+            clearInterval(autoloss);
             console.log("Spacebar hit");
             $('#spacebar').hide();
             // If user wins the round
-            if (gameArr[round] == 1){
+            if (gameArr[round] == 1 && e.keyCode == 32){
                 // Give user an extra token
                 $("#tokensPly").val($("#tokensPly").val()+1);
 
@@ -250,70 +282,139 @@ $(function(){
                 index++;
                 i = 0;
 
-                $("#img1").css("animation-name", "example");
+                $("#img1").css("animation-name", "example_img1");
                 $("#img1").css("animation-duration", "4s");
-                $("#img2").css("animation-name", "example2");
+                $("#img2").css("animation-name", "example2_img2");
                 $("#img2").css("animation-duration", "4s");
 
-                
+                var $element = $('#img1').bind('webkitAnimationEnd', function(){
+                    this.style.webkitAnimationName = '';
+                });
+
+                var $element2 = $('#img2').bind('webkitAnimationEnd', function(){
+                    this.style.webkitAnimationName = '';
+                });
 
                 window.setTimeout(function(){
                     //Update player tokens
-                 
 
-                    $("#tokensPly").html('Tokens: '+'</strong>'+ $("#tokensPly").val());
+
+                    $("#tokensPly").html('Tokens: '+'</strong>'+ $("#tokensPly").val()+"/5");
                     $("#PlyInfo").hide();
                     $("#OppInfo").hide();
-                  
-                    $("#tokensPlyWin").html('Tokens: '+'</strong>'+ $("#tokensPly").val());
+                    
+
+                    $("#tokensPlyWin").html('Tokens: '+'</strong>'+ $("#tokensPly").val()+"/5");
                     $("#pointsPlyWin").html('Points: '+'</strong>'+ $("#pointsPly").val());
-                    $("#tokensOppWin").html('Tokens: '+'</strong>'+ $("#tokensOpp").val());
+                    $("#tokensOppWin").html('Tokens: '+'</strong>'+ $("#tokensOpp").val()+"/5");
                     $("#pointsOppWin").html('Points: '+'</strong>'+ $("#pointsOpp").val());
 
-                   
+                    console.log("Opp Tokens: "+$("#tokensOpp").val());
                   if ($("#tokensPly").val()==5){
                         $("#keepBtn1").hide();
                     }else{
                         $("#keepBtn1").show();
                     }
 
-                    if ($("#pointsOpp").val()==0){
+                    if ($("#tokensPly").val()==0){
                         $("#deductBtn1").hide();
+                        $("#convertBtn1").hide();
+                        $("#keepBtn1").hide();
+                        $("#messageButton").show();
+
                     }else{
                         $("#deductBtn1").show();
+                        $("#convertBtn1").show();
+                        $("#keepBtn1").show();
+                        $("#messageButton").hide();
                     }
 
-                    winModal.style.display = "block";
+                    $("#roundh1").html("You won!");
+                    $("#deduction").hide();
+                    $("#roundInfo").html("You have earned 1 token.");
+                    $("#roundInfo").show();
+                    roundModal.style.display = "block";
+                    t0 = performance.now();
                 }, 1500);
 
 
 
-            } else {
+            } else if (e.keyCode == 80 || gameArr[round] == 0){
+
+                console.log("Opp Tokens: "+$("#tokensOpp").val());
                 //Computer wins
 
                 console.log("Computer wins!");
                 //Subtract 100 points from player
-                if($("#pointsPly").val()>=100){
-                    var newval = $("#pointsPly").val()-100;
-                    $("#pointsPly").val(newval);
+                var tokenIncrease = $("#tokensOpp").val()+1;
 
-                    $("#deduction").html('Your opponenet has deducted 100 points')
+                console.log(tokenIncrease);
+
+                var tokensOpp = $("#tokensOpp").val(tokenIncrease);
+
+                console.log($("#tokensOpp").val());
+
+                if($("#pointsPly").val()>=100 && round%2==0){
+                    console.log("deduct points")
+
+                    var tokensDeduct = (Math.floor(Math.random() * $("#tokensOpp").val())) +1;
+
+                    console.log(tokensDeduct);
+
+                    var decrease = tokensDeduct*100*(1 + (tokensDeduct-1)*.05);
+                    console.log(decrease);
+                    var deductPly = $("#pointsPly").val()-decrease;
+
+                    //var deductPly =$("#pointsPly").val()-100;
+
+                    console.log(deductPly);
+
+                    $("#pointsPly").val(deductPly);
+
+                    $("#tokensOpp").val($("#tokensOpp").val()-tokensDeduct);
+
+
+                    console.log("Tokens Opp New: " +$("#tokensOpp").val(tokensOpp));
+
+                    $("#pointsPly").html("Points: "+$("#pointsPly").val());
+
+                    console.log("Points Ply: "+$("#pointsPly").val());
+
+                    $("#roundInfo").html('Your opponent has deducted '+decrease+ ' points from you.');
+
+
+                    $("#pointsPly").html("Points: "+ $("#pointsPly").val());
+
+                } else if(round%3==0 || $("#tokensOpp").val()==5){
+
+                    console.log("convert points");
+
+
+
+                   var tokensConvert = (Math.floor(Math.random() * $("#tokensOpp").val())) +1;
+
+                   var increase = tokensConvert*100*(1 + (tokensConvert-1)*.05);
+
+
+                    var newPoints= $("#pointsOpp").val()+increase;
+
+                    var oppTokens = $("#tokensOpp").val();
+
+                    $("#pointsOpp").val(newPoints);
+                    $("#pointsOpp").html("Points: "+$("#pointsOpp").val());
+                    $("#roundInfo").html('Your opponenet has converted '+increase+ ' points.');
+                    
+                    oppTokens-=1;
+                    $("#tokensOpp").val(oppTokens);
+                    
+                }else{
+                    $("#roundInfo").html('Your opponenet has kept points.');
 
                 }
 
-                var oppTokens = $("#tokensOpp").val() +1;
-
-                $("#tokensOpp").val(oppTokens);
-
-                if(round%3==0){
-                    var oppPoints = $("#pointsOpp").val();
-
-                    $("#pointsOpp").val(oppPoints + 100);
-                    $("#tokensOpp").val(oppTokens-1);
-                }
+                $("#tokensOpp").html("Tokens: "+$("#tokensOpp").val()+"/5");
 
 
-                
 
                 $("#stoplight").css("background-color", "red");
                 ctx1.fillStyle="#222";
@@ -327,40 +428,58 @@ $(function(){
                 index++;
                 i = 0;
 
-                $("#img1").css("animation-name", "example2");
+                $("#img1").css("animation-name", "example2_img1");
                 $("#img1").css("animation-duration", "4s");
-                $("#img2").css("animation-name", "example");
+                $("#img2").css("animation-name", "example_img2");
                 $("#img2").css("animation-duration", "4s");
+
+                var $element = $('#img1').bind('webkitAnimationEnd', function(){
+                    this.style.webkitAnimationName = '';
+                });
+
+                var $element2 = $('#img2').bind('webkitAnimationEnd', function(){
+                    this.style.webkitAnimationName = '';
+                });
 
                  window.setTimeout(function(){
                     // Update player score
                     $("#pointsPly").html('Points: '+'</strong>'+ $("#pointsPly").val());
                     $("#PlyInfo").hide();
                     $("#OppInfo").hide();
-                  
-                    $("#tokensPlyLose").html('Tokens: '+'</strong>'+ $("#tokensPly").val());
-                    $("#pointsPlyLose").html('Points: '+'</strong>'+ $("#pointsPly").val());
-                    $("#tokensOppLose").html('Tokens: '+'</strong>'+ $("#tokensOpp").val());
-                    $("#pointsOppLose").html('Points: '+'</strong>'+ $("#pointsOpp").val());
+
+                    $("#tokensPlyWin").html('Tokens: '+'</strong>'+ $("#tokensPly").val()+"/5");
+                    $("#pointsPlyWin").html('Points: '+'</strong>'+ $("#pointsPly").val());
+                    $("#tokensOppWin").html('Tokens: '+'</strong>'+ $("#tokensOpp").val()+"/5");
+                    $("#pointsOppWin").html('Points: '+'</strong>'+ $("#pointsOpp").val());
 
                     if ($("#tokensPly").val()==5){
-                        $("#keepBtn2").hide();
+                        $("#keepBtn1").hide();
                     }else{
-                        $("#keepBtn2").show();
+                        $("#keepBtn1").show();
                     }
 
                     console.log($("#pointsOpp").val());
-                    if ($("#pointsOpp").val()==0){
+                    if ($("#tokensPly").val()==0){
+                        $("#deductBtn1").hide();
+                        $("#convertBtn1").hide();
+                        $("#keepBtn1").hide();
+                        $("#messageButton").show();
 
-                        $("#deductBtn2").hide();
                     }else{
-                        $("#deductBtn2").show();
+                        $("#deductBtn1").show();
+                        $("#convertBtn1").show();
+                        $("#keepBtn1").show();
+                        $("#messageButton").hide();
                     }
 
-                    loseModal.style.display = "block";
+
+                    $("#roundh1").html("You lost.");
+                   
+                    roundModal.style.display = "block";
+                    t0 = performance.now();
                 }, 1500);
 
-
+                }
 
             }
         }
@@ -374,15 +493,15 @@ $('#submitId').on("click", sendMessage);
 
 $("#convertBtn1").click(convertPopUp);
 
-$("#convertBtn2").click(convertPopUp);
+
 
 $("#deductBtn1").click(deductPopUp);
 
-$("#deductBtn2").click(deductPopUp);
+
 
 $("#keepBtn1").click(keepOption);
 
-$("#keepBtn2").click(keepOption);
+
 
 $("#chartlink").click(tokenPopUp)
 
@@ -392,14 +511,23 @@ $("#deductId").on('click', deductPoints);
 
 $("#nextBtn").on('click', function(){
     messageModal.style.display = "none";
+    // isSpaceFlag = true;
+    addinc();
     reset();
+});
+
+$("#mesgBtn").on('click', function(){
+    roundModal.style.display = "none";
+    messageModal.style.display = "block";
+    
 });
 
 $("#questionBtn").on('click', function(){
     //load questionaire page
+    window.location.replace("questions.html");
 });
 
-
+//CHANGE end chanegs to this function
 function gameEnd(){
     if($("#pointsOpp").val()<$("#pointsPly").val()){
         $("#resultHeader").html("Congratulations! You won the game!")
@@ -408,49 +536,124 @@ function gameEnd(){
     }else{
         $("#resultHeader").html("The game is a tie!")
     }
+    $("#tokensPlyR").html('Tokens: '+'</strong>'+ $("#tokensPly").val());
+    $("#pointsPlyR").html('Points: '+'</strong>'+ $("#pointsPly").val());
+    $("#tokensOppR").html('Tokens: '+'</strong>'+ $("#tokensOpp").val());
+    $("#pointsOppR").html('Points: '+'</strong>'+ $("#pointsOpp").val());
 
     resultModal.style.display = "block";
 
 }
 
-function convertPoints(event){
-    event.preventDefault();
-    console.log("Tried to convert points");
+function keepOption(){
+    console.log("inside keep popup");
+    t1 = performance.now();
+    var time = t1-t0;
 
-    console.log($("#tokensConvert").val());
-    var conversion = $("#tokensConvert").val();
-    var pointsAdd = $("#tokensConvert").val()*100*(1 + ($("#tokensPly").val()-1)*.05);;
-    convertModal.style.display = "none";
-    messageModal.style.display = "block";
-    // If they try to convert negative amounts of tokens
-    if(conversion < 0){
-        conversion = 0;
-        pointsAdd = 0;
-    }
-    // If they try to convert more tokens than they have
-    if(conversion > $("#tokensPly").val()){
-        conversion = $("#tokensPly").val();
-        pointsAdd = conversion*100*(1 + ($("#tokensPly").val()-1)*.05);
-    }
-    // Convert tokens to points
-    var newToken = $("#tokensPly").val()-conversion;
-    $("#tokensPly").val(newToken);
-    $("#pointsPly").val($("#pointsPly").val()+pointsAdd);
-    // Let the backend know convert was the action taken
-    socket.emit('action',
-    {
+    // Let backend know user just kept tokens
+    socket.emit('action', {
         rounds: round,
-        action: "convert",
+        action: 0,
+        time: time,
+        pointsPlyPre: $("#pointsPly").val(),
         pointsPly: $("#pointsPly").val(),
+        pointsOppPre: $("#pointsOpp").val(),
         pointsOpp: $("#pointsOpp").val(),
+        tokensPlyPre: $("#tokensPly").val(),
         tokensPly: $("#tokensPly").val(),
+        tokensOppPre: $("#tokensOpp").val(),
         tokensOpp: $("#tokensOpp").val(),
         winner: gameArr[round]
     });
-    // Update tokens and points
-    $("#tokensPly").html('Tokens: '+'</strong>'+ $("#tokensPly").val());
-    $("#pointsPly").html('Points: '+'</strong>'+ $("#pointsPly").val());
+    // Ask for computer message in these rounds
+    if(round == 3 || round == 5 || round == 8){
+        socket.emit('sendCompMessage', {rounds:round});
+    }
     round += 1;
+
+    //CHNAGE add if statment
+    if(round==numRounds){
+            roundModal.style.display = "none";
+
+            
+
+            gameEnd();
+        }else{
+            roundModal.style.display = "none";
+
+           
+
+            messageModal.style.display = "block";
+
+        }
+
+    
+
+}
+function convertPoints(event){
+    event.preventDefault();
+    console.log("Tried to convert points");
+    t1 = performance.now();
+    var time = t1-t0;
+    //CHANGE add regex and if statement
+    console.log($("#tokensConvert").val());
+    var conversion = $("#tokensConvert").val();
+    var regTokens = new RegExp("^[0-9]+$");
+    var matchTokens = regTokens.test(conversion);
+
+    if(matchTokens){
+        var pointsAdd = $("#tokensConvert").val()*100*(1 + ($("#tokensPly").val()-1)*.05);;
+
+        // If they try to convert negative amounts of tokens
+        if(conversion < 0){
+            conversion = 0;
+            pointsAdd = 0;
+        }
+        // If they try to convert more tokens than they have
+        if(conversion > $("#tokensPly").val()){
+            conversion = $("#tokensPly").val();
+            pointsAdd = conversion*100*(1 + ($("#tokensPly").val()-1)*.05);
+        }
+        // Convert tokens to points
+        var newToken = $("#tokensPly").val()-conversion;
+        $("#tokensPly").val(newToken);
+        $("#pointsPly").val($("#pointsPly").val()+pointsAdd);
+        // Let the backend know convert was the action taken
+        socket.emit('action',
+        {
+            rounds: round,
+            action: conversion,
+            time: time,
+            pointsPlyPre: ($("#pointsPly").val()-pointsAdd),
+            pointsPly: $("#pointsPly").val(),
+            pointsOppPre: $("#pointsOpp").val(),
+            pointsOpp: $("#pointsOpp").val(),
+            tokensPlyPre: $("#tokensPly").val()+conversion,
+            tokensPly: $("#tokensPly").val(),
+            tokensOppPre: $("#tokensOpp").val(),
+            tokensOpp: $("#tokensOpp").val(),
+            winner: gameArr[round]
+        });
+        // Update tokens and points
+        $("#tokensPly").html('Tokens: '+'</strong>'+ $("#tokensPly").val()+"/5");
+        $("#tokensOpp").html('Tokens: '+'</strong>'+ $("#tokensOpp").val()+"/5");
+        $("#pointsPly").html('Points: '+'</strong>'+ $("#pointsPly").val());
+        round += 1;
+
+        //CHANGE add if statement
+         if(round==numRounds){
+            convertModal.style.display = "none";
+            gameEnd();
+        }else{
+            convertModal.style.display = "none";
+            messageModal.style.display = "block";
+        }
+
+    }else{
+        alert("Please enter a valid amount of tokens.")
+
+    }
+
     //reset();
 }
 
@@ -458,31 +661,61 @@ function convertPoints(event){
 function deductPoints(event){
     event.preventDefault();
     console.log("Tried to deduct points");
+    t1 = performance.now();
+    var time = t1-t0;
 
-    console.log($("#pointsDeduct").val());
-    var deduct = $("#pointsDeduct").val()
+    var deduct = $("#tokensDeduct").val()
+    console.log(deduct);
+    var tokens = $("#tokensPly").val();
+    console.log(tokens);
+     //CHANGE add regex and if statement
+    var regTokens = new RegExp("^[0-9]+$");
+    var matchTokens = regTokens.test(deduct);
+    console.log(matchTokens);
 
-    var conversion = deduct/100;
-    deductModal.style.display = "none";
-    messageModal.style.display = "block";
-    $("#pointsOpp").val($("#pointsOpp").val()-deduct);
-    $("#tokensPly").val($("#tokensPly").val()-conversion);
+    if(matchTokens && deduct<=tokens && deduct >0){
+
+        var deductOpp = $("#pointsOpp").val()-(deduct*100*(1 + (deduct-1)*.05));
+
+        $("#pointsOpp").val(deductOpp);
+
+         tokens-=deduct;
+
+        $("#tokensPly").val(tokens);
 
 
-    socket.emit('action',
-    {
-        rounds: round,
-        action: "deduct",
-        pointsPly: $("#pointsPly").val(),
-        pointsOpp: $("#pointsOpp").val(),
-        tokensPly: $("#tokensPly").val(),
-        tokensOpp: $("#tokensOpp").val(),
-        winner: gameArr[round]
-    });
-    $("#tokensPly").html('Tokens: '+'</strong>'+ $("#tokensPly").val());
-    $("#pointsOpp").html('Points: '+'</strong>' + $("#pointsOpp").val());
-    round += 1;
-    //reset();
+        socket.emit('action',
+        {
+            rounds: round,
+            action: (-deduct),
+            time, time,
+            pointsPlyPre: $("#pointsPly").val(),
+            pointsPly: $("#pointsPly").val(),
+            pointsOppPre: $("#pointsOpp").val()+deductOpp,
+            pointsOpp: $("#pointsOpp").val(),
+            tokensPlyPre: $("#tokensPly").val()+deduct,
+            tokensPly: $("#tokensPly").val(),
+            tokensOppPre: $("#tokensOpp").val(),
+            tokensOpp: $("#tokensOpp").val(),
+            winner: gameArr[round]
+        });
+        $("#tokensPly").html('Tokens: '+'</strong>'+ $("#tokensPly").val()+"/5");
+        $("#pointsOpp").html('Points: '+'</strong>' + $("#pointsOpp").val());
+        round += 1;
+
+         //CHANGE if statement
+        if(round==numRounds){
+            deductModal.style.display = "none";
+            gameEnd();
+        }else{
+            deductModal.style.display = "none";
+            messageModal.style.display = "block";
+        }
+
+    }else{
+        alert("Please enter a valid amount of tokens.")
+
+    }
 }
 
 function setUpInfoBar(namePly, nameOpp){
@@ -493,7 +726,7 @@ function setUpInfoBar(namePly, nameOpp){
 
     $("#tokensPly").val(0);
 
-    $("#pointsPly").val(0);
+    $("#pointsPly").val(numPoints);
 
     var tokensPly = $("#tokensPly").val();
 
@@ -512,7 +745,7 @@ function setUpInfoBar(namePly, nameOpp){
 
     $("#tokensOpp").val(0);
 
-    $("#pointsOpp").val(0);
+    $("#pointsOpp").val(numPoints);
 
     var tokensOpp = $("#tokensOpp").val();
 
@@ -524,24 +757,26 @@ function setUpInfoBar(namePly, nameOpp){
 
     $("#pointsOpp").html('Points: ' + pointsOpp);
 
+    $("#tokensPly").html('Tokens: '+'</strong>'+ $("#tokensPly").val()+"/5");
+    $("#tokensOpp").html('Tokens: '+'</strong>'+ $("#tokensOpp").val()+"/5");
+
 }
 
 function convertPopUp(){
     console.log("inside convert popup");
 
-    if($("#tokensPly").val() ==1){
-        $("#convertTokens").html("You have "+ $("#tokensPly").val()+" token.")
+    //CHANGE add if statment
+
+    
+    $("#convertTokens").html("You have "+ $("#tokensPly").val()+" token.")
 
 
-    }else{
-        $("#convertTokens").html("You have "+ $("#tokensPly").val()+" tokens.")
-
-    }
+    
     convertModal.style.display = "block";
 
-    loseModal.style.display = "none";
+    roundModal.style.display = "none";
 
-    winModal.style.display = "none";
+    
 
 
 }
@@ -549,13 +784,12 @@ function convertPopUp(){
 function deductPopUp(){
     console.log("inside deduct popup");
 
+    //CHANGE add line
+    $("#deductPoints").append(" has "+ $("#pointsOpp").val()+ " points");
+
     deductModal.style.display = "block";
 
-    loseModal.style.display = "none";
-
-    winModal.style.display = "none";
-
-    $("#tokensOpp").val($("#tokensOpp").val()-1);
+    roundModal.style.display = "none";
 
 
 }
@@ -564,32 +798,7 @@ function tokenPopUp(){
     tokenModal.style.display = "block";
 }
 
-function keepOption(){
-    console.log("inside keep popup");
 
-    loseModal.style.display = "none";
-
-    winModal.style.display = "none";
-
-    messageModal.style.display = "block";
-
-    // Let backend know user just kept tokens
-    socket.emit('action', {
-        rounds: round,
-        action: "kept",
-        pointsPly: $("#pointsPly").val(),
-        pointsOpp: $("#pointsOpp").val(),
-        tokensPly: $("#tokensPly").val(),
-        tokensOpp: $("#tokensOpp").val(),
-        winner: gameArr[round]
-    });
-    // Ask for computer message in these rounds
-    if(round == 3 || round == 5 || round == 8){
-        socket.emit('sendCompMessage', {rounds:round});
-    }
-    round += 1;
-
-}
 
 function sendMessage(event) {
 
@@ -606,13 +815,13 @@ function sendMessage(event) {
     li.html('<span style="font-weight:bold; color:red;"">' + username + '</span>: ' + message);
     $("#messagesList").append(li);
 
-    if(round==numRounds){
-        gameEnd();
-    }else{
-        messageModal.style.display = "none";
-        reset();
-    }
-    
+
+    messageModal.style.display = "none";
+    // isSpaceFlag = true;
+    addinc();
+    reset();
+
+
 
 }
 
