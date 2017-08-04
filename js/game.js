@@ -302,7 +302,7 @@ $(function(){
                     $("#tokensPly").html('Tokens: '+'</strong>'+ $("#tokensPly").val()+"/5");
                     $("#PlyInfo").hide();
                     $("#OppInfo").hide();
-                    
+
 
                     $("#tokensPlyWin").html('Tokens: '+'</strong>'+ $("#tokensPly").val()+"/5");
                     $("#pointsPlyWin").html('Points: '+'</strong>'+ $("#pointsPly").val());
@@ -402,13 +402,13 @@ $(function(){
 
                     $("#pointsOpp").val(newPoints);
                     $("#pointsOpp").html("Points: "+$("#pointsOpp").val());
-                    $("#roundInfo").html('Your opponenet has converted '+increase+ ' points.');
-                    
+                    $("#roundInfo").html('Your opponent converted '+increase+ ' points.');
+
                     oppTokens-=1;
                     $("#tokensOpp").val(oppTokens);
-                    
+
                 }else{
-                    $("#roundInfo").html('Your opponenet has kept points.');
+                    $("#roundInfo").html('Your opponent has kept points.');
 
                 }
 
@@ -474,7 +474,7 @@ $(function(){
 
 
                     $("#roundh1").html("You lost.");
-                   
+
                     roundModal.style.display = "block";
                     t0 = performance.now();
                 }, 1500);
@@ -519,7 +519,7 @@ $("#nextBtn").on('click', function(){
 $("#mesgBtn").on('click', function(){
     roundModal.style.display = "none";
     messageModal.style.display = "block";
-    
+
 });
 
 $("#questionBtn").on('click', function(){
@@ -575,19 +575,19 @@ function keepOption(){
     if(round==numRounds){
             roundModal.style.display = "none";
 
-            
+
 
             gameEnd();
         }else{
             roundModal.style.display = "none";
 
-           
+
 
             messageModal.style.display = "block";
 
         }
 
-    
+
 
 }
 function convertPoints(event){
@@ -767,16 +767,16 @@ function convertPopUp(){
 
     //CHANGE add if statment
 
-    
+
     $("#convertTokens").html("You have "+ $("#tokensPly").val()+" token.")
 
 
-    
+
     convertModal.style.display = "block";
 
     roundModal.style.display = "none";
 
-    
+
 
 
 }

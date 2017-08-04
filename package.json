@@ -26,7 +26,9 @@
     "express": "^4.15.2",
     "hogan": "^1.0.2",
     "http": "0.0.0",
+    "package.json": "^2.0.1",
     "path": "^0.12.7",
-    "socket.io": "^1.7.3"
+    "socket.io": "^1.7.3",
+    "sqlite3": "^3.1.8"
   }
 }
